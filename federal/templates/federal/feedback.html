@@ -1,0 +1,30 @@
+{% extends 'federal/base.html'  %}
+{% block title %}The Federal Feedback{% endblock %}
+{% block body %}
+
+<div class="container">
+  <div class="row">
+    <div class="col-lg-6 col-lg-offset-3 col-md-6 col-md-offset-3 col-sm-12 col-xs-12">
+      <p style="text-align:center;font-size:1.5em;color:white;">Democracy</p>
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div class="col-sm-offset-2 col-sm-10">
+                  <p style="font-size:1.3em;color:green;">Feedback</h3>
+                  <p style="font-size:.9em;color:green;">We love to here from you</p>
+                    </div>
+                    <form class="form-horizontal" action="" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {% include 'federal/form-template.html' %}
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-10">
+                            <button type="submit" class="btn btn-success">submit</button>
+                        </div>
+                    </div>
+                  </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

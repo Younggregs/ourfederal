@@ -1,0 +1,145 @@
+{% if is_logged_in %}
+{% extends 'federal/base.html'  %}
+
+{% block javascript %}
+  <script>
+    $(".favorited").click(function () {
+
+      var $this = $(this);
+      var reply_id = $this.data('id');
+
+      $.ajax({
+        url: '/thefederal/ajax/r_unfavorited/',
+        data: {
+          'reply_id': reply_id
+        },
+        dataType: 'json',
+        success: function (data) {
+          if (data.is_unfavorited) {
+            alert("Oops favorite could not be unset")
+          }else{
+
+            var favorite = $this.parent().find('.favorite-count');
+                var count = favorite.text();
+                favorite.fadeOut().text(data.counter).fadeIn();
+                $this.parent().find('.hidden').removeClass('hidden');
+                $this.addClass('hidden')
+          }
+        },
+
+        error : function(data) {
+           alert("A bug appeared.");
+           console.log(); // provide a bit more info about the error to the console
+       }
+
+      });
+
+    });
+
+
+    $(".unfavorited").click(function () {
+
+      var $this = $(this);
+      var reply_id = $this.data('id');
+
+
+      $.ajax({
+        url: '/thefederal/ajax/r_favorited/',
+        data: {
+          'reply_id': reply_id
+        },
+        dataType: 'json',
+        success: function (data) {
+          if (data.is_favorited) {
+            var favorite = $this.parent().find('.favorite-count');
+                var count = favorite.text();
+                favorite.fadeOut().text(data.counter).fadeIn();
+                $this.parent().find('.hidden').removeClass('hidden');
+                $this.addClass('hidden')
+
+          }else{
+            alert("Oops favorite could not be set")
+          }
+        },
+
+        error : function(data) {
+           alert("A bug appeared.");
+           console.log(); // provide a bit more info about the error to the console
+       }
+
+      });
+
+    });
+  </script>
+{% endblock %}
+
+{% block body %}
+
+<div class="container">
+  <div class="row">
+    <div class="col-lg-6 col-lg-offset-3 col-md-6 col-md-offset-3 col-sm-12 col-xs-12">
+<p style="text-align:center;font-size:1.3em">Democracy</p>
+
+<div class="panel panel-default">
+    <div class="panel-body">
+
+    <p style="color:green;font-size:.9em;"><img src="{{ display_pic.url }}" alt="Profile picture" height="50px" width="50px">
+          {{firstname|escape }} {{ lastname|escape }} </p>
+    <p style="color:green;font-size:.9em;">{{ position|escape }}
+    <p> {{ comment|escape }} </p><br /><br /><hr /><br />
+
+     </div></div>
+
+     <div class="panel panel-default">
+         <div class="panel-body">
+<form class="form-inline" role="form" method="post" action="{% url 'federal:reply' comment.id %}">
+{% csrf_token %}
+  <div class="form-group">
+    <textarea name="reply" rows="2" cols="30">
+    </textarea>
+  </div>
+
+  <div class="form-group">
+    <button type="submit" class="btn btn-default btn-success active" name="submit" >reply</button>
+  </div>
+
+</form><br /><br />
+</div></div>
+
+<ul>
+  {% if content_cache %}
+
+  {% for context in content_cache %}
+
+  <div class="panel panel-default">
+      <div class="panel-body">
+
+      <p style="color:green;font-size:.9em;"><img src="{{ context.display_pic.url }}" alt="Profile picture" height="50px" width="50px">
+            {{ context.firstname|escape }} {{ context.lastname|escape }} </p>
+        <p style="color:green;font-size:.9em;">{{ context.position|escape }}
+    <p>{{ context.reply_post|escape }}</p><hr />
+    <p>
+    {% if context.if_favorited %}
+    <a href="#" class='favorited' data-id="{{ context.id|escape }}" ><span style="color:orange;" class="glyphicon glyphicon-star" ></span></a>
+    <a href="#" class='unfavorited hidden' data-id="{{ context.id|escape }}" ><span style="color:orange;" class="glyphicon glyphicon-star-empty" ></span></a>
+    {% else %}
+    <a href="#" class='unfavorited' data-id="{{ context.id|escape }}" ><span style="color:orange;" class="glyphicon glyphicon-star-empty"></span></a>
+    <a href="#" class='favorited hidden' data-id="{{ context.id|escape }}" ><span style="color:orange;" class="glyphicon glyphicon-star"></span></a>
+    {% endif %}
+    <span class="badge badge-info favorite-count">{{ context.favorite_count|escape }}</span>
+
+              <a href="#">share</a></p><hr />
+
+            </div></div>
+
+    {% endfor %}
+</ul>
+{% else %}
+
+  </div></div></div>
+{% endif %}
+
+{% endblock %}
+{% else %}
+<p style="color:red;font-size:1.5em;">You must login to access this page</p>
+{% endif %}

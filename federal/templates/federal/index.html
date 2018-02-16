@@ -1,0 +1,74 @@
+{% extends 'federal/base.html'  %}
+{% block home %} <a class="navbar-brand" href="{% url 'federal:index' %}">The Federal</a> {% endblock %}
+{% block signout %}
+<li><a href= "{% url 'federal:signin' %}"><span style="color:black;">Sign In</span></a></li>
+<li><a href= "#"><span style="color:black;">About</span></a></li>
+{% endblock %}
+{% block body %}
+{% if content_cache %}
+
+<div class="container">
+  <div class="row">
+    <div class="col-lg-6 col-lg-offset-3 col-md-6 col-md-offset-3 col-sm-12 col-xs-12">
+      <p style="text-align:center;font-size:1.3em;color:white;">Democracy</p>
+
+
+ <ul>
+    {% for context in content_cache %}
+
+    <div class="panel panel-default">
+        <div class="panel-body">
+
+        <p style="color:green;font-size:.9em;"><img src="{{ context.display_pic.url }}" alt="Profile picture" height="50px" width="50px">
+          {{ context.firstname|escape }} {{ context.lastname|escape }} </p>
+        <p style="color:green;font-size:.9em;">{{ context.position|escape }}</p>
+        <p style="color:grey;font-size:.9em;"> {{ context.date|escape }} </p>
+
+         {% if context.is_long %}
+           <p>{{ context.thread_post|safe|truncatewords:"50"|linebreaks|escape }}</p>
+           <a href="{% url 'federal:comment' context.id %}">read more</a>
+         {% else %}
+           <p>{{ context.thread_post|safe|linebreaks|escape }}</p><hr />
+         {% endif %}
+
+         {% if context.thread_media %}
+          {% for media in context.thread_media %}
+
+            {% if media.image|length > 1 %}
+            <p><img src="{{ media.image.url }}" alt="image" height="200px" width="250px"></p><br />
+            {% elif media.audio|length > 1 %}
+            <p><audio width = "200" height = "100" controls>
+              <source src = "{{ media.audio.url|escape }}" type="audio/ogg">
+              <source src = "{{ media.audio.url|escape }}" type="audio/mpeg">
+              <source src = "{{ media.audio.url|escape }}"type="audio/wav">
+                Sorry your browser does not support the audio element
+            <audio></p><br />
+            {% elif media.video|length > 1 %}
+            <p><video width="500" height="260" preload controls>
+              <source src="{{ media.video.url|escape }}" type="video/mp4; "/>
+              <source src="{{ media.video.url|escape }}" type="video/ogg; "/>
+              <source src="{{ media.video.url|escape }}" type="video/webm "/>
+                Sorry your browser does not support the video tag yet
+           </video></p><br />
+            {% else %}
+              <p>Oops something happened, media could not be loaded</p>
+            {% endif %}
+
+          {% endfor %}
+        {% endif %}
+
+        <p><a href="#">favorite</a>
+            <a href="#">comment</a>
+              <a href="#">share</a></p><hr />
+
+      </div>
+    </div>
+    {% endfor %}
+
+</ul>
+{% else %}
+    <h3>You don't have any New threads </h3>
+  </div></div></div>
+{% endif %}
+
+{% endblock %}

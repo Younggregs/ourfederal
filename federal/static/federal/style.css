@@ -1,0 +1,39 @@
+body{
+  background-color: green;
+}
+
+.navbar {
+    border-radius: 0;
+    border-style: none;
+}
+
+.navbar {
+    background: rgba(225, 225, 225, 0.9)
+}
+
+.navbar-default .navbar-brand {
+    color: green;
+}
+
+.navbar-brand {
+  color:green;
+}
+
+.thread-post{
+    background-color: white;
+}
+
+.badge-info{
+    background-color:orange;
+}
+
+.comment_thread{
+   background: whitesmoke;
+   padding : 10px;
+
+}
+
+.reply_thread{
+    background: whitesmoke;
+    padding : 10px;
+}

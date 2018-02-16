@@ -1,0 +1,1017 @@
+Federal Capital Territory
+
+Gwagwalada
+Kuje
+Abaji
+Abuja Municipal
+Bwari
+Kwali
+
+1.Abia
+
+ i.Abia North Senatorial District
+
+   1.UMUNNEOCHI
+   2.ISUKWUATO
+   3.OHAFIA
+   4.AROCHUKWU
+   5.BENDE
+
+ ii.Abia Central Senatorial District
+
+   6.UMUAHIA NORTH
+   7.UMUAHIA SOUTH
+   8.IKWUANO
+   9.ISIALA NGWA NORTH
+   10.ISIALA NGWA SOUTH
+
+ iii.Abia South Senatorial District
+
+   11.ABA NORTH
+   12.ABA SOUTH
+   13.UGWUNAGBO
+   14.OBINGWA
+   15.UKWA EAST
+   16.UKWA WEST
+   17.OSISIOMA
+
+2.Adamawa
+
+ i.Adamawa North Senatorial District
+
+   18.MADAGALI
+   19.MAIHA
+   20.MICHIKA
+   21.MUBI NORTH
+   22.MUBI SOUTH
+
+ ii.Adamawa South Senatorial District
+
+   23.DEMSA
+   24.GANYE
+   25.GUYUK
+   26.JADA
+   27.MAYO-BELWA
+   28.NUMAN
+   29.SHELLENG
+   30.TOUNGO
+   31.LAMURDE
+
+ iii.Adamawa Central Senatorial District
+
+   32.HONG
+   33.FUFORE
+   34.SONG
+   35.YOLA NORTH
+   36.YOLA SOUTH
+   37.GERFI
+
+3.Akwa Ibom
+
+ i.Akwa Ibom North East Senatorial District
+
+   38.ETINAN
+   39.IBESIKPO ASUTAN
+   40.IBIONO IBOM
+   41.ITU
+   42.NSIT ATAI
+   43.NSIT IBOM
+   44.NSIT UBIUM
+   45.URUAN
+   46.UYO
+
+ ii.Akwa Ibom North West Senatorial District
+
+   47.ABAK
+   48.ESSIEN UDIM
+   49.ETIM EKPO
+   50.IKA
+   51.IKONO
+   52.IKOT EKPENE
+   53.INI
+   54.OBOT AKARA
+   55.ORUK ANAM
+   56.UKANAFUN
+
+ iii.Akwa Ibom South Senatorial District
+
+   57.EASTERN OBOLO
+   58.EKET
+   59.ESIT EKET
+   60.IBENO
+   61.IKOT ABASI
+   62.MBO
+   63.MKPAT ENIN
+   64.OKOBO
+   65.ONNA
+   66.ORON
+   67.UDUNG UKO
+   68.URUE OFFONG/ORUKO
+
+
+4.Anambra
+
+ i.Anambra North Senatorial District
+
+   69.ONITSHA NORTH
+   70.ONITSHA SOUTH
+   71.OYI
+   72.OGBARU
+   73.ANAMBRA EAST
+   74.ANAMBRA WEST
+   75.AYAMELUM
+
+ ii.Anambra Central Senatorial District
+
+   76.AWKA NORTH
+   77.AWKA SOUTH
+   78.NJIKOKA
+   79.ANAOCHA
+   80.IDEMILI NORTH
+   81.IDEMILI SOUTH
+   82.DUNUKOFIA
+
+ iii.Anambra South Senatorial District
+
+   83.IHIALA
+   84.NNEWI NORTH
+   85.NNEWI SOUTH
+   86.ORUMBA SOUTH
+   87.ORUMBA NORTH
+   88.AGUATA
+   89.EKWUSIGO
+
+5.Bauchi
+
+ i.Bauchi South Senatorial District
+
+   90.LKALERI
+   91.KIRFI
+   92.BAUCHI
+   93.TAFAWA BALEWA
+   94.BOGORO
+   95.DASS
+   96.TORO
+
+ ii.Bauchi Central Senatorial District
+
+   97.NINGI
+   98.WARJI
+   99.DARAZO
+   100.GANJUWA
+   101.MISAU
+   102.DAMBAN
+   103.DARAZO
+
+ iii.Bauchi North Senatorial District
+
+   104.ZAKI
+   105.GAMAWA
+   106.JAMA’ARE
+   107.ITAS-GADAU
+   108.SHIRA
+   109.GIADE
+   110.KATAGUM
+
+
+6.Bayelsa
+
+ i.Bayelsa East Senatorial District
+
+   111.BRASS
+   112.NEMBE
+   113.OGBIA
+
+ ii.Bayelsa Central Senatorial District
+
+   114.KOLOKUMA/OPOKUMA
+   115.SOUTHERN IJAW
+   116.YENAGOA
+
+ iii.Bayelsa West Senatorial District
+
+   117.EKEREMOR
+   118.SAGBAMA
+
+7.Benue
+
+ i.Benue North East Senatorial District
+
+   119.KATSINA-ALA
+   120.KONSHISHA
+   121.KWANDE
+   122.LOGO
+   123.UKUM
+   124.USHONGO
+   125.VANDEIKYA
+
+ ii.Benue North West Senatorial District
+
+   126.BURUKU
+   127.GBOKO
+   128.GUMA
+   129.GWER-EAST
+   130.GWER-WEST
+   131.MARKURDI
+   132.TARKA
+
+ iii.Benue South Senatorial District
+
+   133.ADO
+   134.AGATU
+   135.APA
+   136.OBI
+   137.OGBADIBO
+   138.OHIMINI
+   139.OJU
+   140.OKPOKWU
+   141.OTUKPO
+
+8.Borno
+
+ i.Borno North Senatorial District
+
+   142.ABADAM
+   143.GUBIO
+   144.GUZAMALA
+   145.KUKAWA
+   146.MAGUMERI
+   147.MARTE
+   148.MOBBAR
+   149.NGANZA
+   150.MOGUNO
+
+ ii.Borno Central Senatorial District
+
+   151.DIKWA
+   152.JERE
+   153.KALA BALGE
+   154.MAFA
+   155.METROPOLITAN
+   156.NGALA
+   157.KONDUGA
+   158.BAMA
+   159.KAGA
+
+ iii.Borno South Senatorial District
+
+   160.ASKIRA/UBA
+   161.BAYO
+   162.BIU
+   163.CHIBOK
+   164.DAMABOA
+   165.GWOZA
+   166.HAWUL
+   167.KWAYA
+   168.SHANI
+
+
+9.Cross River
+
+ i.Cross River North Senatorial District
+   169.BEKWARRA
+   170.OBANLIKU
+   171.OBUDU
+   172.OGOJA
+   173.YALA
+   174.BIASE
+
+ ii.Cross River Central Senatorial District
+   175.ABI
+   176.BOKI
+   177.ETUNG
+   178.IKOM
+   179.OBUBRA
+   180.YAKURR
+
+ iii.Cross River South Senatorial District
+   181.CALABAR MUNICIPAL
+   182.CALABAR SOUTH
+   183.AKAMKPA
+   184.AKPABUYO
+   185.BAKASSI
+   186.ODUKPANI
+
+10.Delta
+
+ i.Delta Central Senatorial District
+
+   187.ETHIOPE EAST
+   188.ETHIOPE WEST
+   189.OKPE
+   190.SAPELE
+   191.UDU
+   192.UGHELLI NORTH
+   193.UGHELI SOUTH
+
+ ii.Delta North Senatorial District
+
+   194.ANIOCHA NORTH
+   195.ANIOCHA SOUTH
+   196.IKA NORTH-EAST
+   197.IKA SOUTH
+   198.NDOKWA EAST
+   199.NDOKWA WEST
+   200.OSHIMILI NORTH
+   201.OSHIMILI SOUTH
+   202.UKWUANI
+
+ iii,Delta South Senatorial District
+
+   203.OMADI
+   204.BURUTU
+   205.ISOKO NORTH
+   206.ISOKO SOUTH
+   207.PATANI
+   208.WARRI NORTH
+   209.WARRI SOUTH
+   210.WARRI SOUTH WEST
+
+
+11.Ebonyi
+
+ i.Ebonyi North Senatorial District
+
+   211.ABAKALIKI
+   212.EBONYI
+   213.IZZI
+   214.OHAUKWU
+
+ ii.Ebonyi Central Senatorial District
+
+   215.ZZA NORTH
+   216.EZZA SOUTH
+   217.IKWO
+   218.ISHIELU
+
+ iii.Ebonyi South Senatorial District
+
+   219.AFIKPO NORTH
+   220.AFIKPO SOUTH
+   221.IVO
+   222.OHAOZARA
+   223.ONICHA
+
+12.Edo
+
+ i.Edo Central Senatorial District
+
+   224.ESAN CENTRAL
+   225.ESAN NORTH EAST
+   226.ESAN SOUTH EAST
+   227.ESAN WEST
+   228.IGUEBEN
+
+
+ ii.Edo North Senatorial District
+
+   229.AKOKO EDO
+   230.ETSAKO EAST
+   231.ETSAKO CENTRAL
+   232.ETSAKO WEST
+   233.OWAN EAST
+   234.OWAN WEST
+
+ iii.Edo South Senatorial District
+
+   235.OREDO
+   236.ORHIONMWON
+   237.OVIA NORTH EAST
+   238.OVIA SOUTH WEST
+   239.EGOR
+   240.UHUNMWODE
+   241.IKPOBA OKHA
+
+
+13.Ekiti
+
+ i.Ekiti North Senatorial District
+
+   242.IKOLE
+   243.OYE
+   245.IDO/OSI
+   246.MOBA
+   247.ILEJEMEJE
+
+ ii.Ekiti Central Senatorial District
+
+   248.ADO EKITI
+   249.IREPODUN/IFELODUN
+   250.IJERO
+   251.EFON
+   252.EKITI WEST
+
+ iii.Ekiti South Senatorial District
+
+   253. EKITI SOUTH WEST
+   254.IKERE
+   255.EMURE
+   256.ISE/ORUN
+   257.GBONYIN
+   258.EKITI EAST
+
+
+14.Enugu
+
+ i.Enugu East Senatorial District
+
+  259.ENUGU EAST
+  260.ENUGU NORTH
+  261.ENUGU SOUTH
+  262.ISI-UZO
+  263.NKANU EAST
+  264.NKANU WEST
+
+ ii.Enugu West Senatorial District
+
+  265.NINIRI
+  266.AWGU
+  267.EZEAGU
+  268.OJI RIVER
+  269.UDI
+
+ iii.Enugu North Senatorial District
+
+  270.IGBO-ETITI
+  271.IGBO-EZE NORTH
+  272.IGO-EZE SOUTH
+  273.UZO UWANI
+  274.UDENU
+  275.NSUKKA
+
+
+15.Gombe
+
+ i.Gombe Central Senatorial District
+
+   276.AKKO
+   277.YAMALTU/DEBA
+
+ ii.Gombe South Senatorial District
+
+   278.BALANGA
+   279.BILLIRI
+   280.KALTUNGO
+   281.SHONGOM
+
+ iii.Gombe North Senatorial District
+
+   282.FUNAKAYE
+   283.NAFADA
+   284.GOMBE
+   285.KWAMI
+   286.DUKKU
+
+16.Imo
+
+ i.Imo East Senatorial District
+
+   287.ABOH MBAISE
+   288.AHIAZU MBAISE
+   289.EZINIHITTE
+   290.IKEDURU
+   291.MBAITOLI
+   292.NGOR OKPALA
+   293.OWERRI MUNICIPAL
+   294.OWERRI NORTH
+   295.OWERRI WEST
+
+ ii.Imo West Senatorial District
+
+   296. IDEATO NORTH
+   297.IDEATO SOUTH
+   298.ISU
+   299.NJABA
+   300.NKWERE
+   301.NWANGELE
+   302.OGUTA
+   302.OHAJI/EGBEMA
+   303.ORLU
+   304.ORSU
+   305.ORU WEST
+   306.ORU EAST
+
+ iii.Imo North Senatorial District
+
+   307.EHIME MBANO
+   308.IHITE/UBOMA
+   309.ISIALA MBANO
+   310.OBOWO
+   311.OKIGWE
+   312.ONUIMO
+
+
+17.Jigawa
+
+Auyo
+Babura
+Birni Kudu
+Biriniwa
+Buji
+Dutse
+Gagarawa
+Garki
+Gumel
+Guri
+Gwaram
+Gwiwa
+Hadejia
+Jahun
+Kafin Hausa
+Kaugama Kazaure
+Kiri Kasamma
+Kiyawa
+Maigatari
+Malam Madori
+Miga
+Ringim
+Roni
+Sule-Tankarkar
+Taura
+Yankwashi
+
+18.Kaduna
+
+Birni-Gwari
+Chikun
+Giwa
+Igabi
+Ikara
+jaba
+Jema'a
+Kachia
+Kaduna North
+Kaduna South
+Kagarko
+Kajuru
+Kaura
+Kauru
+Kubau
+Kudan
+Lere
+Makarfi
+Sabon-Gari
+Sanga
+Soba
+Zango-Kataf
+Zaria
+
+19.Kano
+
+Ajingi
+Albasu
+Bagwai
+Bebeji
+Bichi
+Bunkure
+Dala
+Dambatta
+Dawakin Kudu
+Dawakin Tofa
+Doguwa
+Fagge
+Gabasawa
+Garko
+Garum
+Mallam
+Gaya
+Gezawa
+Gwale
+Gwarzo
+Kabo
+Kano Municipal
+Karaye
+Kibiya
+Kiru
+kumbotso
+Kunchi
+Kura
+Madobi
+Makoda
+Minjibir
+Nasarawa
+Rano
+Rimin Gado
+Rogo
+Shanono
+Sumaila
+Takali
+Tarauni
+Tofa
+Tsanyawa
+Tudun Wada
+Ungogo
+Warawa
+Wudil
+
+20.Katsina
+
+Bakori
+Batagarawa
+Batsari
+Baure
+Bindawa
+Charanchi
+Dandume
+Danja
+Dan Musa
+Daura
+Dutsi
+Dutsin-Ma
+Faskari
+Funtua
+Ingawa
+Jibia
+Kafur
+Kaita
+Kankara
+Kankia
+Katsina
+Kurfi
+Kusada
+Mai'Adua
+Malumfashi
+Mani
+Mashi
+Matazuu
+Musawa
+Rimi
+Sabuwa
+Safana
+Sandamu
+Zango
+
+21.Kebbi
+
+Aleiro
+Arewa-Dandi
+Argungu
+Augie
+Bagudo
+Birnin Kebbi
+Bunza
+Dandi
+Fakai
+Gwandu
+Jega
+Kalgo
+Koko/Besse
+Maiyama
+Ngaski
+Sakaba
+Shanga
+Suru
+Wasagu/Danko
+Yauri
+Zuru
+
+22.Kogi
+
+Adavi
+Ajaokuta
+Ankpa
+Bassa
+Dekina
+Ibaji
+Idah
+Igalamela-Odolu
+Ijumu
+Kabba/Bunu
+Kogi
+Lokoja
+Mopa-Muro
+Ofu
+Ogori/Mangongo
+Okehi
+Okene
+Olamabolo
+Omala
+Yagba East
+Yagba West
+
+23.Kwara
+
+Asa
+Baruten
+Edu
+Ekiti
+Ifelodun
+Ilorin East
+Ilorin West
+Irepodun
+Isin
+Kaiama
+Moro
+Offa
+Oke-Ero
+Oyun
+Pategi
+
+24.Lagos
+
+Agege
+Ajeromi-Ifelodun
+Alimosho
+Amuwo-Odofin
+Apapa
+Badagry
+Epe
+Eti-Osa
+Ibeju/Lekki
+Ifako-Ijaye
+Ikeja
+Ikorodu
+Kosofe
+Lagos Island
+Lagos Mainland
+Mushin
+Ojo
+Oshodi-Isolo
+Shomolu
+Surulere
+
+25.Nasarawa
+
+Akwanga
+Awe
+Doma
+Karu
+Keana
+Keffi
+Kokona
+Lafia
+Nasarawa
+Nasarawa-Eggon
+Obi
+Toto
+Wamba
+
+26.Niger
+
+Agaie
+Agwara
+Bida
+Borgu
+Bosso
+Chanchaga
+Edati
+Gbako
+Gurara
+Katcha
+Kontagora
+Lapai
+Lavun
+Magama
+Mariga
+Mashegu
+Mokwa
+Muya
+Pailoro
+Rafi
+Rijau
+Shiroro
+Suleja
+Tafa
+Wushishi
+
+27.Ogun
+
+Abeokuta North
+Abeokuta South
+Ado-Odo/Ota
+Egbado North
+Egbado South
+Ewekoro
+Ifo
+Ijebu East
+Ijebu North
+Ijebu North East
+Ijebu Ode
+Ikenne
+Imeko-Afon
+Ipokia
+Obafemi-Owode
+Ogun Waterside
+Odeda
+Odogbolu
+Remo North
+Shagamu
+
+28.Ondo
+
+Akoko North East
+Akoko North West
+Akoko South Akure East
+Akoko South West
+Akure North
+Akure South
+Ese-Odo
+Idanre
+Ifedore
+Ilaje
+Ile-Oluji
+Okeigbo
+Irele
+Odigbo
+Okitipupa
+Ondo East
+Ondo West
+Ose
+Owo
+
+29.Osun
+
+Aiyedade
+Aiyedire
+Atakumosa East
+Atakumosa West
+Boluwaduro
+Boripe
+Ede North
+Ede South
+Egbedore
+Ejigbo
+Ife Central
+Ife East
+Ife North
+Ife South
+Ifedayo
+Ifelodun
+Ila
+Ilesha East
+Ilesha West
+Irepodun
+Irewole
+Isokan
+Iwo
+Obokun
+Odo-Otin
+Ola-Oluwa
+Olorunda
+Oriade
+Orolu
+Osogbo
+
+30.Oyo
+
+Afijio
+Akinyele
+Atiba
+Atigbo
+Egbeda
+IbadanCentral
+Ibadan North
+Ibadan North West
+Ibadan South East
+Ibadan South West
+Ibarapa Central
+Ibarapa East
+Ibarapa North
+Ido
+Irepo
+Iseyin
+Itesiwaju
+Iwajowa
+Kajola
+Lagelu Ogbomosho North
+Ogbmosho South
+Ogo Oluwa
+Olorunsogo
+Oluyole
+Ona-Ara
+Orelope
+Ori Ire
+Oyo East
+Oyo West
+Saki East
+Saki West
+Surulere
+
+31.Plateau
+
+Barikin Ladi
+Bassa
+Bokkos
+Jos East
+Jos North
+Jos South
+Kanam
+Kanke
+Langtang North
+Langtang South
+Mangu
+Mikang
+Pankshin
+Qua'an Pan
+Riyom
+Shendam
+Wase
+
+32.Rivers
+
+Abua/Odual
+Ahoada East
+Ahoada West
+Akuku Toru
+Andoni
+Asari-Toru
+Bonny
+Degema
+Emohua
+Eleme
+Etche
+Gokana
+Ikwerre
+Khana
+Obia/Akpor
+Ogba/Egbema/Ndoni
+Ogu/Bolo
+Okrika
+Omumma
+Opobo/Nkoro
+Oyigbo
+Port-Harcourt
+Tai
+
+33.Sokoto
+
+Binji
+Bodinga
+Dange-shnsi
+Gada
+Goronyo
+Gudu
+Gawabawa
+Illela
+Isa
+Kware
+kebbe
+Rabah
+Sabon birni
+Shagari
+Silame
+Sokoto North
+Sokoto South
+Tambuwal
+Tqngaza
+Tureta
+Wamako
+Wurno
+Yabo
+
+34.Taraba
+
+Ardo-kola
+Bali
+Donga
+Gashaka
+Cassol
+Ibi
+Jalingo
+Karin-Lamido
+Kurmi
+Lau
+Sardauna
+Takum
+Ussa
+Wukari
+Yorro
+Zing
+
+35.Yobe
+
+Bade
+Bursari
+Damaturu
+Fika
+Fune
+Geidam
+Gujba
+Gulani
+Jakusko
+Karasuwa
+Karawa
+Machina
+Nangere
+Nguru Potiskum
+Tarmua
+Yunusari
+Yusufari
+
+36.Zamfara
+
+Anka
+Bakura
+Birnin Magaji
+Bukkuyum
+Bungudu
+Gummi
+Gusau
+Kaura
+Namoda
+Maradun
+Maru
+Shinkafi
+Talata Mafara
+Tsafe
+Zurmi

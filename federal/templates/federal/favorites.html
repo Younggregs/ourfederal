@@ -1,0 +1,73 @@
+{% if is_logged_in %}
+{% extends 'federal/base.html'  %}
+{% block body %}
+
+<div class="container">
+  <div class="row">
+    <div class="col-lg-6 col-lg-offset-3 col-md-6 col-md-offset-3 col-sm-12 col-xs-12">
+
+      <p style="text-align:center;font-size:1.5em;color:white;">Democracy</p>
+
+  <p style="font-size:1.3em;color:white;text-align:center;"> My Favorite Thread-Posts </p>
+  <div class="panel panel-default">
+      <div class="panel-body">
+{% if thread_cache %}
+{% for thread in thread_cache %}
+
+  <div class="thread">
+    <p>{{ thread|escape }}</p>
+  </div><hr />
+
+  {% endfor %}
+  <p><a href="{% url 'federal:threadfavorite' %}">VIEW ALL</a></p>
+
+{% else %}
+      <p style="font-size:1.3em;color:green;text-align:center;">You have no favorited Thread-Post</p>
+{% endif %}
+</div></div>
+
+
+  <p style="font-size:1.3em;color:white;text-align:center;"> My Favorite Comments </p>
+  <div class="panel panel-default">
+      <div class="panel-body">
+  {% if comment_cache %}
+{% for comment in comment_cache %}
+
+  <div class="comment">
+    <p>{{ comment|escape }}</p>
+  </div><hr />
+
+  {% endfor %}
+  <p ><a href="{% url 'federal:commentfavorite'%}">VIEW ALL</a></p>
+
+
+  {% else %}
+      <p style="font-size:1.3em;color:green;text-align:center;">You have no favorited comments</p>
+{% endif %}
+</div></div>
+
+  <p style="font-size:1.3em;color:white;text-align:center;"> My Favorite Replies </p>
+  <div class="panel panel-default">
+      <div class="panel-body">
+{% if reply_cache %}
+{% for reply in reply_cache %}
+
+  <div class="thread">
+    <p>{{ reply|escape }}</p>
+  </div><hr />
+
+  {% endfor %}
+  <p><a href="{% url 'federal:replyfavorite' %}">VIEW ALL</a></p>
+
+
+  {% else %}
+      <p style="font-size:1.3em;color:green;text-align:center;">You have no favorited Replies</p>
+{% endif %}
+</div></div>
+
+  </div></div></div>
+
+{% endblock %}
+{% else %}
+<p style="color:red;font-size:1.5em;">You must login to access this page</p>
+{% endif %}

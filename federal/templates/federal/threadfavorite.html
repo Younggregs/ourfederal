@@ -1,0 +1,118 @@
+{% if is_logged_in %}
+{% extends 'federal/base.html'  %}
+
+{% block javascript %}
+  <script>
+    $(".favorited").click(function () {
+
+      var $this = $(this);
+      var thread_id = $this.data('id');
+
+      $.ajax({
+        url: '/thefederal/ajax/t_unfavorited/',
+        data: {
+          'thread_id': thread_id
+        },
+        dataType: 'json',
+        success: function (data) {
+          if (data.is_unfavorited) {
+            alert("Oops favorite could not be unset")
+          }else{
+
+            var favorite = $this.parent().find('.favorite-count');
+                var count = favorite.text();
+                favorite.fadeOut().text(data.counter).fadeIn();
+                $this.parent().find('.hidden').removeClass('hidden');
+                $this.addClass('hidden')
+          }
+        },
+
+        error : function(data) {
+           alert("A bug appeared.");
+           console.log(); // provide a bit more info about the error to the console
+       }
+
+      });
+
+    });
+
+
+    $(".unfavorited").click(function () {
+
+      var $this = $(this);
+      var thread_id = $this.data('id');
+
+
+      $.ajax({
+        url: '/thefederal/ajax/t_favorited/',
+        data: {
+          'thread_id': thread_id
+        },
+        dataType: 'json',
+        success: function (data) {
+          if (data.is_favorited) {
+            var favorite = $this.parent().find('.favorite-count');
+                var count = favorite.text();
+                favorite.fadeOut().text(data.counter).fadeIn();
+                $this.parent().find('.hidden').removeClass('hidden');
+                $this.addClass('hidden')
+
+          }else{
+            alert("Oops favorite could not be set")
+          }
+        },
+
+        error : function(data) {
+           alert("A bug appeared.");
+           console.log(); // provide a bit more info about the error to the console
+       }
+
+      });
+
+    });
+  </script>
+{% endblock %}
+{% block body %}
+{% if content_cache %}
+
+<div class="container">
+  <div class="row">
+    <div class="col-lg-6 col-lg-offset-3 col-md-6 col-md-offset-3 col-sm-12 col-xs-12">
+      <p style="text-align:center;font-size:1.5em;color:white;">Democracy</p>
+      <p style="text-align:center;font-size:1.5em;color:white;">My Favorited Threads</p>
+
+<ul>
+      {% for context in content_cache %}
+      <div class="panel panel-default">
+        <div class="panel-body">
+
+          <p style="color:green;font-size:.9em;"><img src="{{ context.display_pic.url }}" alt="Profile picture" height="50px" width="50px">
+            {{ context.firstname|escape }} {{ context.lastname|escape }} </p>
+          <p style="color:green;font-size:.9em;">{{ context.position|escape }}</p>
+          <p style="color:grey;font-size:.9em;"> {{ context.date|escape }} </p>
+      <p>{{ context.thread_post|escape }}</p><hr />
+        <p>
+           {% if context.if_favorited %}
+           <a href="#" class='favorited' data-id="{{ context.id|escape }}" ><span class="glyphicon glyphicon-star" ></span></a>
+           <a href="#" class='unfavorited hidden' data-id="{{ context.id|escape }}" ><span class="glyphicon glyphicon-star-empty" ></span></a>
+           {% else %}
+           <a href="#" class='unfavorited' data-id="{{ context.id|escape }}" ><span class="glyphicon glyphicon-star-empty"></span></a>
+           <a href="#" class='favorited hidden' data-id="{{ context.id|escape }}" ><span class="glyphicon glyphicon-star"></span></a>
+           {% endif %}
+           <span class="badge badge-success favorite-count">{{ context.favorite_count|escape }}</span>
+
+            <a href="{% url 'federal:comment' context.id|escape %}">comment</a>
+              <a href="#">share</a></p><hr />
+      </div></div>
+
+    {% endfor %}
+</ul>
+{% else %}
+    <h3>You don't have any favorited thread-post </h3>
+  </div></div></div>
+{% endif %}
+
+{% endblock %}
+{% else %}
+<p style="color:red;font-size:1.5em;">You must login to access this page</p>
+{% endif %}
