@@ -1,4 +1,4 @@
-{% if is_logged_in %}
+
 {% extends 'federal/base.html'  %}
 
 {% block javascript %}
@@ -9,7 +9,7 @@
       var thread_id = $this.data('id');
 
       $.ajax({
-        url: '/thefederal/ajax/t_unfavorited/',
+        url: '/ourfederal/ajax/t_unfavorited/',
         data: {
           'thread_id': thread_id
         },
@@ -44,7 +44,7 @@
 
 
       $.ajax({
-        url: '/thefederal/ajax/t_favorited/',
+        url: '/ourfederal/ajax/t_favorited/',
         data: {
           'thread_id': thread_id
         },
@@ -97,9 +97,10 @@
   {% csrf_token %}
   {% include 'federal/form-template.html' %}
   <div class="form-group">
-        <button type="submit" class="btn btn-success">update</button>
+        <button type="submit" class="btn btn-success">update dp</button>
     </div>
 </form><br /><br />
+<p><a href="{% url 'federal:editprofile' %}">edit profile</a></p>
 
   </div></div>
   {% if content_cache %}
@@ -159,6 +160,7 @@
          <span class="badge badge-info favorite-count">{{ context.favorite_count|escape }}</span>
 
           <a href="{% url 'federal:comment' context.id %}">comment</a>
+	   <span class="badge badge-info comment-count">{{ context.comment_count|escape }}</span>
             <a href="#">share</a></p><hr />
 
     </div>
@@ -172,6 +174,3 @@
 {% endif %}
 
 {% endblock %}
-{% else %}
-<p style="color:red;font-size:1.5em;">You must login to access this page</p>
-{% endif %}

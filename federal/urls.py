@@ -4,8 +4,11 @@ from . import views
 app_name = 'federal'
 
 urlpatterns = [
-    #thefederal/
-    url(r'^$',views.HomeView.as_view(), name = 'home'),
+    #thefederal/home
+    url(r'^home/$',views.HomeView.as_view(), name = 'home'),
+
+    #thefederal/index
+    url(r'^$',views.index, name = 'index'),
 
     #thefederal/index
     url(r'^index/$',views.index, name = 'index'),
@@ -78,6 +81,15 @@ urlpatterns = [
 
     #thefederal/forgot_password
     url(r'^forgotpassword/$', views.ForgotPasswordView.as_view(), name='forgotpassword'),
+
+    #thefederal/reset_password
+    url(r'^resetpassword/$', views.ResetPasswordView.as_view(), name='resetpassword'),
+
+    #thefederal/edit_profile
+    url(r'^editprofile/$', views.EditProfileView.as_view(), name='editprofile'),
+
+    #thefederal/state/w/all_json_models
+    url(r'^state/(?P<state>[-\w]+)/all_json_models/$', views.all_json_models, name='all_json_models'),
 
 
 

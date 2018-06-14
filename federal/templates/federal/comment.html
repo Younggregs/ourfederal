@@ -1,4 +1,3 @@
-{% if is_logged_in %}
 {% extends 'federal/base.html'  %}
 
 {% block javascript %}
@@ -9,7 +8,7 @@
       var comment_id = $this.data('id');
 
       $.ajax({
-        url: '/thefederal/ajax/c_unfavorited/',
+        url: '/ourfederal/ajax/c_unfavorited/',
         data: {
           'comment_id': comment_id
         },
@@ -44,7 +43,7 @@
 
 
       $.ajax({
-        url: '/thefederal/ajax/c_favorited/',
+        url: '/ourfederal/ajax/c_favorited/',
         data: {
           'comment_id': comment_id
         },
@@ -85,23 +84,23 @@
         <p style="color:green;font-size:.9em;"><img src="{{ display_pic.url }}" alt="Profile picture" height="50px" width="50px">
           {{ firstname|escape }} {{ lastname|escape }} </p>
         <p style="color:green;font-size:.9em;">{{ position|escape }}</p>
-        <p style="color:grey;font-size:.9em;"> {{ date|escape }} </p>
+        <p style="color:grey;font-size:.9em;"> {{ date|date:"D d M Y g:i a"|escape }} </p>
         <p>{{ thread|escape }}</p>
 
 {% if thread_media %}
  {% for media in thread_media %}
 
    {% if media.image|length > 1  %}
-   <p><img src="{{ media.image.url }}" alt="image" height="200px" width="250px"></p><br />
+   <p><img src="{{ media.image.url }}" alt="image" style='height: 100%; width: 100%; object-fit: contain'></p><br />
    {% elif media.audio|length > 1 %}
-   <p><audio width = "200" height = "100" controls>
+   <p><audio width = "200" height = "100" controls style='height: 100%; width: 100%; object-fit: contain'>
      <source src = "{{ media.audio.url|escape }}" type="audio/ogg">
      <source src = "{{ media.audio.url|escape }}" type="audio/mpeg">
      <source src = "{{ media.audio.url|escape }}"type="audio/wav">
        Sorry your browser does not support the audio element
    <audio></p><br />
    {% elif media.video|length > 1 %}
-   <p><video width="500" height="260" preload controls>
+   <p><video width="500" height="260" preload controls style='height: 100%; width: 100%; object-fit: contain'>
      <source src="{{ media.video.url|escape }}" type="video/mp4; "/>
      <source src="{{ media.video.url|escape }}" type="video/ogg; "/>
      <source src="{{ media.video.url|escape }}" type="video/webm "/>
@@ -155,6 +154,7 @@
   <span class="badge badge-info favorite-count">{{ context.favorite_count|escape }}</span>
 
             <a href="{% url 'federal:reply' context.id %}">reply</a>
+		<span class="badge badge-info comment-count">{{ context.reply_count|escape }}</span>
               <a href="#">share</a></p><hr />
 
             </div></div>
@@ -167,6 +167,4 @@
 {% endif %}
 
 {% endblock %}
-{% else %}
-<p style="color:red;font-size:1.5em;">You must login to access this page</p>
-{% endif %}
+

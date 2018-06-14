@@ -2,7 +2,7 @@
 <html lang = "en">
 <head>
   <meta charset="utf-8">
-  <title>{% block title %}The Federal{% endblock %}</title>
+  <title>{% block title %}Our Federal{% endblock %}</title>
   {% load staticfiles %}
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width = device-width, initial-scale=1">
@@ -12,7 +12,50 @@
   rel="stylesheet" type="text/css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+ 
+  <style>
 
+body{
+  background-color: green;
+}
+
+.navbar {
+    border-radius: 0;
+    border-style: none;
+}
+
+.navbar {
+    background: rgba(225, 225, 225, 0.9)
+}
+
+.navbar-default .navbar-brand {
+    color: green;
+}
+
+.navbar-brand {
+  color:green;
+}
+
+.thread-post{
+    background-color: white;
+}
+
+.badge-info{
+    background-color:orange;
+}
+
+.comment_thread{
+   background: whitesmoke;
+   padding : 10px;
+
+}
+
+.reply_thread{
+    background: whitesmoke;
+    padding : 10px;
+}
+
+</style>
 
 
 </head>
@@ -22,7 +65,7 @@
 
                     <div class="#">
                       {% block home %}
-                       <a class="navbar-brand" href="{% url 'federal:home' %}">The Federal</a>
+                       <a class="navbar-brand" href="{% url 'federal:home' %}">Our Federal</a>
                         {% endblock %}
 
                         <div style="text-align:right;padding-right:15px;">

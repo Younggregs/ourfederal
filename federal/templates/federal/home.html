@@ -9,7 +9,7 @@
       var thread_id = $this.data('id');
 
       $.ajax({
-        url: '/thefederal/ajax/t_unfavorited/',
+        url: '/ourfederal/ajax/t_unfavorited/',
         data: {
           'thread_id': thread_id
         },
@@ -44,7 +44,7 @@
 
 
       $.ajax({
-        url: '/thefederal/ajax/t_favorited/',
+        url: '/ourfederal/ajax/t_favorited/',
         data: {
           'thread_id': thread_id
         },
@@ -110,7 +110,7 @@
         <p style="color:green;font-size:.9em;"><img src="{{ context.display_pic.url }}" alt="Profile picture" height="50px" width="50px">
           {{ context.firstname|escape }} {{ context.lastname|escape }} </p>
         <p style="color:green;font-size:.9em;">{{ context.position|escape }}</p>
-        <p style="color:grey;font-size:.9em;"> {{ context.date|escape }} </p>
+        <p style="color:grey;font-size:.9em;"> {{ context.date|date:"D d M Y g:i a"|escape }} </p>
 
         {% if context.is_long %}
          <p>{{ context.thread_post|safe|truncatewords:"50"|linebreaks|escape }}</p>
@@ -123,16 +123,16 @@
         {% for media in context.thread_media %}
 
           {% if media.image|length > 1 %}
-          <p><img src="{{ media.image.url }}" alt="image" height="200px" width="250px"></p><br />
+          <p><img src="{{ media.image.url }}" alt="image" style='height: 100%; width: 100%; object-fit: contain'></p><br />
           {% elif media.audio|length > 1 %}
-          <p><audio width = "200" height = "100" controls>
+          <p><audio width = "200" height = "100" controls style='height: 100%; width: 100%; object-fit: contain'>
             <source src = "{{ media.audio.url|escape }}" type="audio/ogg">
             <source src = "{{ media.audio.url|escape }}" type="audio/mpeg">
             <source src = "{{ media.audio.url|escape }}"type="audio/wav">
               Sorry your browser does not support the audio element
           <audio></p><br />
           {% elif media.video|length > 1 %}
-          <p><video width="500" height="260" preload controls>
+          <p><video width="500" height="260" preload controls style='height: 100%; width: 100%; object-fit: contain'>
             <source src="{{ media.video.url|escape }}" type="video/mp4; "/>
             <source src="{{ media.video.url|escape }}" type="video/ogg; "/>
             <source src="{{ media.video.url|escape }}" type="video/webm "/>
@@ -157,7 +157,15 @@
            <span class="badge badge-info favorite-count">{{ context.favorite_count|escape }}</span>
 
             <a href="{% url 'federal:comment' context.id|escape  %}">comment</a>
-              <a href="#">share</a></p><hr />
+	<span class="badge badge-info comment-count">{{ context.comment_count|escape }}</span>            
+ 	share to
+
+              {% load social_share %}
+
+              {% post_to_facebook object_or_url "facebook" %} |
+              {% post_to_twitter "From OurFederal: Read more" object_or_url "twitter" %}
+
+	</p><hr />
 
       </div>
     </div>

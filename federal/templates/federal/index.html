@@ -1,8 +1,27 @@
 {% extends 'federal/base.html'  %}
-{% block home %} <a class="navbar-brand" href="{% url 'federal:index' %}">The Federal</a> {% endblock %}
+
+{% block javascript %}
+  <script>
+    $(".no-favorite").click(function () {
+
+      alert('Sorry you have to login to favorite this post');
+
+    });
+
+
+    $(".no-comment").click(function () {
+
+      alert('Sorry you have to login to comment on this post');
+
+    });
+  </script>
+{% endblock %}
+
+
+{% block home %} <a class="navbar-brand" href="{% url 'federal:index' %}">Our Federal</a> {% endblock %}
 {% block signout %}
 <li><a href= "{% url 'federal:signin' %}"><span style="color:black;">Sign In</span></a></li>
-<li><a href= "#"><span style="color:black;">About</span></a></li>
+<li><a href= "{% url 'federal:about' %}"><span style="color:black;">About</span></a></li>
 {% endblock %}
 {% block body %}
 {% if content_cache %}
@@ -22,7 +41,7 @@
         <p style="color:green;font-size:.9em;"><img src="{{ context.display_pic.url }}" alt="Profile picture" height="50px" width="50px">
           {{ context.firstname|escape }} {{ context.lastname|escape }} </p>
         <p style="color:green;font-size:.9em;">{{ context.position|escape }}</p>
-        <p style="color:grey;font-size:.9em;"> {{ context.date|escape }} </p>
+        <p style="color:grey;font-size:.9em;"> {{ context.date|date:"D d M Y g:i a"|escape }} </p>
 
          {% if context.is_long %}
            <p>{{ context.thread_post|safe|truncatewords:"50"|linebreaks|escape }}</p>
@@ -35,16 +54,16 @@
           {% for media in context.thread_media %}
 
             {% if media.image|length > 1 %}
-            <p><img src="{{ media.image.url }}" alt="image" height="200px" width="250px"></p><br />
+            <p><img src="{{ media.image.url }}" alt="image" style='height: 100%; width: 100%; object-fit: contain'></p><br />
             {% elif media.audio|length > 1 %}
-            <p><audio width = "200" height = "100" controls>
+            <p><audio width = "200" height = "100" controls style='height: 100%; width: 100%; object-fit: contain'>
               <source src = "{{ media.audio.url|escape }}" type="audio/ogg">
               <source src = "{{ media.audio.url|escape }}" type="audio/mpeg">
               <source src = "{{ media.audio.url|escape }}"type="audio/wav">
                 Sorry your browser does not support the audio element
             <audio></p><br />
             {% elif media.video|length > 1 %}
-            <p><video width="500" height="260" preload controls>
+            <p><video width="500" height="260" preload controls style='height: 100%; width: 100%; object-fit: contain'>
               <source src="{{ media.video.url|escape }}" type="video/mp4; "/>
               <source src="{{ media.video.url|escape }}" type="video/ogg; "/>
               <source src="{{ media.video.url|escape }}" type="video/webm "/>
@@ -57,9 +76,18 @@
           {% endfor %}
         {% endif %}
 
-        <p><a href="#">favorite</a>
-            <a href="#">comment</a>
-              <a href="#">share</a></p><hr />
+        <p><a href="#" class="no-favorite">favorite</a>
+	   <span class="badge badge-info favorite-count">{{ context.favorite_count|escape }}</span>
+            <a href="#" class="no-comment">comment</a>
+	             <span class="badge badge-info favorite-count">{{ context.comment_count|escape }}</span>
+              share to
+
+		{% load social_share %}
+
+              {% post_to_facebook object_or_url "facebook" %} |
+              {% post_to_twitter "From OurFederal: Read more" object_or_url "twitter" %}
+
+		</p><hr />
 
       </div>
     </div>

@@ -1,6 +1,6 @@
 {% extends 'federal/base.html'  %}
 
-{% block home %} <a class="navbar-brand" href="{% url 'federal:home' %}">The Federal</a> {% endblock %}
+{% block home %} <a class="navbar-brand" href="{% url 'federal:home' %}">Our Federal</a> {% endblock %}
 {% block signout %}
  <li><a href= "{% url 'federal:signin' %}"><span style="color:black;">Sign In</span></a></li>
  <li><a href= "{% url 'federal:about' %}"><span style="color:black;">About</span></a></li>
@@ -15,7 +15,7 @@
       //alert("Control reached here " + username);
 
       $.ajax({
-        url: '/thefederal/ajax/validate_username/',
+        url: '/ourfederal/ajax/validate_username/',
         data: {
           'username': username
         },
@@ -36,10 +36,44 @@
     });
 
 
+
+$(document).ready(
+   function() {
+     $("select#state").change(function() {
+       if ($(this).val() == 'Z') {
+         $("select#lga").html("<option>Select a lga</option>");
+         $("select#lga").attr('disabled', true);
+    }
+       else {
+         var url = "/state/" + $(this).val() + "/all_json_models";
+         var brand = $(this).val();
+    $.getJSON(url, function(models) {
+      var options = '<option value="Z">Select a lga</option>';
+      for (var i = 0; i < models.length; i++) {
+        options += '<option value="' + models[i].pk + '">' + models[i].fields['lga'] + '</option>';
+    }
+      $("select#lga").html(options);
+      $("select#lga option:first").attr('selected', 'selected');
+      $("select#lga").attr('disabled', false);
+    });
+    }
+    });
+
+
+    $("select#state").change(function(vent) {
+      if ($(this).val() == -1) {
+        return;
+    }
+    //myAwesomeFunctionToCallWhenAModelIsSelected();
+    });
+    });
+
+
+
   </script>
 {% endblock %}
 
-{% block title %}The Federal Signup{% endblock %}
+{% block title %}Our Federal Signup{% endblock %}
 {% block body %}
 
 <div class="container">
@@ -55,11 +89,17 @@
                     {% csrf_token %}
                     {% include 'federal/form-template.html' %}
 
+		    <div class="form-group">
+                                  <div class="col-sm-offset-2 col-sm-10">
+                                    <label id="confirm_password">Confirm Password</label>
+                                      <input type="password" name="confirm_password">
+                                  </div>
+                              </div>
 
                     <div class="form-group">
                         <div class="col-sm-offset-2 col-sm-10">
-                        <label for="state">Select State</label>
-                      <select name="state">
+                      <select name="state" id="state">
+                        <option value="Z">Select a state</option>
                         {% for state in state_list %}
                         <option value="{{ state.id }}">{{ state.state}}</option>
                         {% endfor %}
@@ -71,15 +111,11 @@
 
                     <div class="form-group">
                         <div class="col-sm-offset-2 col-sm-10">
-                      <label for="state">Select Local Government Area</label>
-                      <select name="lga">
-                        {% for lga in lga_list %}
-                      <option value="{{ lga.id }}">{{ lga.lga}}</option>
-                        {% endfor %}
+                      <select name="lga" id="lga" disabled="true">
+                      <option>Select a lga</option>
                       </select>
+                        </div>
                     </div>
-                    </div>
-
 
                     <div class="form-group">
                         <div class="col-sm-offset-2 col-sm-10">
@@ -96,7 +132,7 @@
                     </form>
 
                     <div class="col-sm-offset-2 col-sm-10">
-                    <a href="/thefederal/sign_in">Sign In</a>
+                    <a href="/ourfederal/sign_in">Sign In</a>
                   </div>
 
                     <p style="text-align:center;color:grey;">By signing up, you agree to our

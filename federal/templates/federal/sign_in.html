@@ -1,6 +1,6 @@
 {% extends 'federal/base.html'  %}
-{% block title %}The Federal Signin{% endblock %}
-{% block home %} <a class="navbar-brand" href="{% url 'federal:signin' %}">The Federal</a> {% endblock %}
+{% block title %}Our Federal Signin{% endblock %}
+{% block home %} <a class="navbar-brand" href="{% url 'federal:signin' %}">Our Federal</a> {% endblock %}
 {% block signout %}
 <li><a href= "{% url 'federal:signup' %}"><span style="color:black;">Sign Up</span></a></li>
 <li><a href= "{% url 'federal:about' %}"><span style="color:black;">About</span></a></li>
@@ -33,7 +33,7 @@
                     </form>
 
                     <div class="col-sm-offset-2 col-sm-10">
-                    <a href="/thefederal/sign_up">Sign Up</a>
+                    <a href="/ourfederal/sign_up">Sign Up</a>
                   </div>
                   <p style="text-align:center;color:grey;">
                   <a href="{% url 'federal:forgotpassword' %}">Forgot Password ?</a></p>

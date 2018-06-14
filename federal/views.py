@@ -1,24 +1,36 @@
 from __future__ import unicode_literals
 from django.views import generic
 from django.views.generic import View
+from django.contrib.auth.hashers import check_password , make_password
 from django.views.generic.edit import FormView
-from django.core.urlresolvers import reverse_lazy , reverse
 from django.core.mail import send_mail
+from django.core.mail import EmailMessage
+from django.core import serializers
+from django.http import HttpResponse
 from django.shortcuts import render , redirect
 from django.contrib.auth import authenticate , login
 from django.http import JsonResponse
-from .forms import Signin , Signup , CommentTemplate , ReplyTemplate , ThreadTemplate , ProfileTemplate , FeedbackTemplate, FeedbackNewTemplate, ForgotPasswordTemplate
-from .models import Account , State , Lga , Position , Thread ,Media , Zone , Comment , Reply , ThreadFavoriter, CommentFavoriter, ReplyFavoriter , Feedback
+from .forms import Signin , Signup , CommentTemplate , ReplyTemplate , ThreadTemplate , ProfileTemplate , FeedbackTemplate, FeedbackNewTemplate, ForgotPasswordTemplate , ResetPasswordTemplate, EditProfileTemplate
+from .models import Account , State , Lga , Position , Thread ,Media , Zone , Comment , Reply , ThreadFavoriter, CommentFavoriter, ReplyFavoriter , Feedback , ForgotPassword
+import random
+
 
 IMAGE_FILE_TYPES = ['png', 'jpg', 'jpeg']
 AUDIO_FILE_TYPES = ['wav', 'mp3', 'ogg']
 VIDEO_FILE_TYPES = ['webm', 'mp4', 'ogg']
 
 
-
+ 
 def index(request):
 
-    thread_list = Thread.objects.filter(namespace = 1) | Thread.objects.filter(namespace = 2)
+    if request.session.has_key('username'):
+        username = request.session['username']
+
+        return redirect( 'federal:home')
+
+
+
+    thread_list = Thread.objects.filter(namespace = 999) | Thread.objects.filter(namespace = 990)
 
     content_cache = []
     content = {}
@@ -32,6 +44,7 @@ def index(request):
 
         else:
             is_long = 0
+
 
 
         id = thread.id
@@ -48,6 +61,10 @@ def index(request):
 
         position = get_position.position
 
+	favorite_count = ThreadFavoriter.objects.filter(id = id).count()
+
+        comment_count = Comment.objects.filter(id = id).count()	
+
         thread_media = Media.objects.filter(thread_id = id)[:1]
 
         context_list = {
@@ -59,7 +76,9 @@ def index(request):
             'firstname' : firstname,
             'lastname' : lastname,
             'position' : position,
-            'display_pic' : display_pic
+            'display_pic' : display_pic,
+	    'favorite_count' : favorite_count,
+	    'comment_count' : comment_count
         }
 
         content_cache.append(context_list)
@@ -123,7 +142,7 @@ class HomeView(FormView):
         lga = Lga.objects.get(id=lga_id)
         lga_code = lga.lga_code
 
-        thread_list = Thread.objects.filter(namespace=1) | Thread.objects.filter(namespace=2) | \
+        thread_list = Thread.objects.filter(namespace=999) | Thread.objects.filter(namespace=990) | \
                         Thread.objects.filter(state = state_code) | Thread.objects.filter(zone = zone_code) | \
                             Thread.objects.filter(lga = lga_code)
 
@@ -165,6 +184,8 @@ class HomeView(FormView):
 
             favorite_count = ThreadFavoriter.objects.filter(id = id).count()
 
+	    comment_count = Comment.objects.filter(id = id).count()
+
             thread_media = Media.objects.filter(thread_id = id)[:1]
 
             context_list = {
@@ -178,7 +199,8 @@ class HomeView(FormView):
                 'position' : position,
                 'display_pic' : display_pic,
                 'if_favorited' : if_favorited,
-                'favorite_count' : favorite_count
+                'favorite_count' : favorite_count,
+		'comment_count' : comment_count 
             }
 
             content_cache.append(context_list)
@@ -337,7 +359,7 @@ class HomeView(FormView):
             lga = Lga.objects.get(id=lga_id)
             lga_code = lga.lga_code
 
-            thread_list = Thread.objects.filter(namespace=1) | Thread.objects.filter(namespace=2) | \
+            thread_list = Thread.objects.filter(namespace=999) | Thread.objects.filter(namespace=990) | \
                             Thread.objects.filter(state = state_code) | Thread.objects.filter(zone = zone_code) | \
                                 Thread.objects.filter(lga = lga_code)
 
@@ -383,6 +405,8 @@ class HomeView(FormView):
 
                 favorite_count = ThreadFavoriter.objects.filter(id = id).count()
 
+		comment_count = Comment.objects.filter(id = id).count()
+
                 thread_media = Media.objects.filter(thread_id = id)[:1]
 
                 context_list = {
@@ -394,7 +418,8 @@ class HomeView(FormView):
                     'lastname' : lastname,
                     'position' : position,
                     'if_favorited' : if_favorited,
-                    'favorite_count' : favorite_count
+                    'favorite_count' : favorite_count,
+		    'comment_count' : comment_count
                 }
 
                 content_cache.append(context_list)
@@ -414,7 +439,114 @@ class HomeView(FormView):
 
 
         else:
-            pass
+           
+	    if request.session.has_key('username'):
+                username = request.session['username']
+                is_logged_in = True
+            else :
+                is_logged_in = False
+
+            account = Account.objects.get(username=username)
+
+            a_position = account.position_id
+
+            b_position = Position.objects.get(id = a_position)
+
+            c_position = b_position.position
+
+            if c_position == 'Citizen':
+                show_form = False
+
+            else :
+                show_form = True
+
+            zone_id = account.zone_id
+            lga_id = account.lga_id
+            state_id = account.state_id
+
+            state = State.objects.get(id=state_id)
+            state_code = state.state_code
+
+            zone = Zone.objects.get(id=zone_id)
+            zone_code = zone.zone_code
+
+            lga = Lga.objects.get(id=lga_id)
+            lga_code = lga.lga_code
+
+            thread_list = Thread.objects.filter(namespace=999) | Thread.objects.filter(namespace=990) | \
+                            Thread.objects.filter(state = state_code) | Thread.objects.filter(zone = zone_code) | \
+                                Thread.objects.filter(lga = lga_code)
+
+
+
+            content_cache = []
+            content = {}
+
+            for thread in thread_list:
+
+
+                thread_post = thread.thread
+
+                if len(thread_post.split()) >= 50:
+                    is_long = 1
+
+                else:
+                    is_long = 0
+
+
+                id = thread.id
+                date = thread.date
+
+                account_id = thread.account_id
+                account = Account.objects.get(id=account_id)
+
+                firstname = account.firstname
+                lastname = account.lastname
+                position_id = account.position_id
+                display_pic = account.display_pic
+
+                get_position = Position.objects.get(id = position_id)
+                position = get_position.position
+
+                my_id = Account.objects.get(username = username);
+                my_id = my_id.id
+
+                if_favorited = ThreadFavoriter.objects.filter(thread_id = id , account_id = my_id).exists()
+
+                favorite_count = ThreadFavoriter.objects.filter(id = id).count()
+
+                comment_count = Comment.objects.filter(id = id).count()
+
+                thread_media = Media.objects.filter(thread_id = id)[:1]
+
+                context_list = {
+                    'id' : id,
+                    'thread_post' : thread_post,
+                    'date' : date,
+                    'is_long' : is_long,
+                    'thread_media' : thread_media,
+                    'firstname' : firstname,
+                    'lastname' : lastname,
+                    'position' : position,
+                    'display_pic' : display_pic,
+                    'if_favorited' : if_favorited,
+                    'favorite_count' : favorite_count,
+                    'comment_count' : comment_count
+                }
+
+                content_cache.append(context_list)
+
+            form=self.form_class(None)
+
+            content = {
+                'form' : form,
+                'content_cache':content_cache,
+                'show_form' : show_form,
+                'is_logged_in' : is_logged_in
+            }
+
+
+            return render(request ,self.template_name,content)
 
 
 
@@ -462,74 +594,107 @@ class SignupView(View):
             lastname = form.cleaned_data['lastname']
             username = form.cleaned_data['username']
             password = form.cleaned_data['password']
-            state = request.POST['state']
-            lga = request.POST['lga']
+	    confirm_password = request.POST['confirm_password']
+            state = request.POST.get('state','0')
+            lga = request.POST.get('lga','0')
 
-            lga_in_state = Lga.objects.filter(id = lga , state_id = state).exists()
+            if state != 'Z' and lga != 'Z':
 
-            if lga_in_state :
+                lga_in_state = Lga.objects.filter(id = lga , state_id = state).exists()
 
-                state = State.objects.get(id=state)
-                lga = Lga.objects.get(id=lga)
+                if lga_in_state :
 
-                lga_zone = lga.zone_id
+                    state = State.objects.get(id=state)
+                    lga = Lga.objects.get(id=lga)
 
-                zone = Zone.objects.get(id = lga_zone)
+                    lga_zone = lga.zone_id
 
-                default = "Citizen"
-                position = Position.objects.get(position=default)
+                    zone = Zone.objects.get(id = lga_zone)
+
+                    default = "Citizen"
+                    position = Position.objects.get(position=default)
 
 
 
-                try:
-                    acc = Account.objects.get(username = username)
+                    try:
+                        acc = Account.objects.get(username = username)
 
-                    err_msg = "An account with this email already exist"
+                        err_msg = "An account with this username already exist"
 
-                    if acc:
-                        return render(request, self.template_name , {
-                        'form':form ,
-                        'err_msg':err_msg ,
-                        'state_list' : state_list,
-                        'lga_list' : lga_list,
-                        'username':username
-                        })
+                        if acc:
+                            return render(request, self.template_name , {
+                            'form':form ,
+                            'err_msg':err_msg ,
+                            'state_list' : state_list,
+                            'lga_list' : lga_list,
+                            'username':username
+                            })
 
-                except:
-                    new_user = Account()
 
-                    #set_password(password)
+                        else:
+                            err_msg = "Invalid username"
 
-                    new_user.firstname = firstname
-                    new_user.lastname = lastname
-                    new_user.password = password
-                    new_user.username = username
-                    new_user.state = state
-                    new_user.lga = lga
-                    new_user.position = position
-                    new_user.zone = zone
-                    new_user.save()
 
-                    request.session['username'] = username
+                            form=self.form_class(None)
+                            return render(request, self.template_name , {
+                            'form':form ,
+                            'state_list':state_list,
+                            'lga_list':lga_list,
+                            'err_msg':err_msg
+                            })
 
-                    return redirect('federal:home')
+                    except:
+
+                        if password == confirm_password :
+
+                            new_user = Account()
+
+                            new_user.firstname = firstname
+                            new_user.lastname = lastname
+                            new_user.password = make_password(password)
+                            new_user.username = username
+                            new_user.state = state
+                            new_user.lga = lga
+                            new_user.position = position
+                            new_user.zone = zone
+                            new_user.save()
+
+
+                            
+                            request.session['username'] = username
+
+                            return redirect('federal:home')
+
+
+                        else :
+
+                            err_msg = "Passwords do not match"
+
+                            return render(request, self.template_name , {
+                            'form':form ,
+                            'err_msg':err_msg ,
+                            'state_list' : state_list,
+                            'lga_list' : lga_list,
+                            'username':username
+                            })
+
+
 
                 else:
-                    err_msg = "All fields are required"
-                    name = acc.name
 
-                    form=self.form_class(None)
+                    err_msg = "Oops the Lga you chose is not in the state, try again"
+
                     return render(request, self.template_name , {
                     'form':form ,
-                    'state_list':state_list,
-                    'lga_list':lga_list,
-                    'err_msg':err_msg
+                    'err_msg':err_msg ,
+                    'state_list' : state_list,
+                    'lga_list' : lga_list
                     })
 
 
             else:
 
-                err_msg = "Oops the Lga you chose is not in the state, try again"
+                err_msg = "Oops looks like you did not select state or lga, they are required please"
 
                 return render(request, self.template_name , {
                 'form':form ,
@@ -538,15 +703,24 @@ class SignupView(View):
                 'lga_list' : lga_list
                 })
 
-        else:
-            pass
 
+
+        else:
+            err_msg = "oops something wrong happened, try again"
+
+            return render(request, self.template_name , {
+            'form':form ,
+            'err_msg':err_msg ,
+            'state_list' : state_list,
+            'lga_list' : lga_list
+            })
 
 
 class SigninView(View):
 
     form_class = Signin
     template_name ='federal/sign_in.html'
+    err_msg = ''
 
     def get(self, request):
        # if request.session.has_key('username'):
@@ -559,6 +733,7 @@ class SigninView(View):
 
 
     def post(self, request):
+
         form=self.form_class(request.POST)
 
         if form.is_valid():
@@ -567,37 +742,68 @@ class SigninView(View):
             password = form.cleaned_data['password']
 
 
+            if Account.objects.filter(username = username).exists() :
 
-            try:
-                acc = Account.objects.get(username = username)
 
-                if password == acc.password:
+                try:
 
-                    request.session['username'] = username
-                    return redirect('federal:home')
+                    acc = Account.objects.get(username = username)
 
-            except:
+                    if  check_password(password , acc.password):
 
-                err_msg = "Username and password did not match"
-                name = acc.name
+                        request.session['username'] = username
+                        return redirect('federal:home')
 
-                form=self.form_class(None)
-                return render(request, self.template_name , {
-                'form':form ,
-                'err_msg':err_msg
-                })
+                    else:
+
+                       err_msg = "Username and password did not match"
+
+
+                       form=self.form_class(None)
+                       return render(request, self.template_name , {
+                       'form':form ,
+                       'err_msg':err_msg
+                       })
+
+                except:
+
+                    err_msg = "Acccount does not exist"
+
+
+                    form=self.form_class(None)
+                    return render(request, self.template_name , {
+                    'form':form ,
+                    'err_msg':err_msg
+                    })
+
+
+
+
+
+
+
+
 
             else:
-                err_msg = "All fields are required"
-                name = acc.name
+
+                err_msg = "Acccount does not exist"
+
 
                 form=self.form_class(None)
                 return render(request, self.template_name , {
                 'form':form ,
                 'err_msg':err_msg
                 })
+
+
         else:
-            pass
+            err_msg = "Incorrect login details"
+
+            form=self.form_class(None)
+            return render(request, self.template_name , {
+            'form':form ,
+            'err_msg':err_msg
+            })
 
 
 
@@ -665,6 +871,8 @@ class CommentView(View):
 
             favorite_count = CommentFavoriter.objects.filter(id = id).count()
 
+	    reply_count = Reply.objects.filter(id = id).count()
+
             context_list = {
                 'id' : id,
                 'comment_post' : comment_post,
@@ -673,7 +881,8 @@ class CommentView(View):
                 'position' : position,
                 'display_pic' : display_pic,
                 'if_favorited' : if_favorited,
-                'favorite_count' : favorite_count
+                'favorite_count' : favorite_count,
+		'reply_count' : reply_count
             }
 
             content_cache.append(context_list)
@@ -724,35 +933,12 @@ class CommentView(View):
             post_comment.save()
 
 
-        thread = Thread.objects.get(id=context_id)
+            thread = Thread.objects.get(id=context_id)
 
-        thread = Thread.objects.get(id=context_id)
-        id = thread.id
-        date = thread.date
+            thread = Thread.objects.get(id=context_id)
+            id = thread.id
+            date = thread.date
 
-        account_id = thread.account_id
-        account = Account.objects.get(id=account_id)
-
-        firstname = account.firstname
-        lastname = account.lastname
-        position_id = account.position_id
-        display_pic = account.display_pic
-
-        get_position = Position.objects.get(id = position_id)
-
-        position = get_position.position
-
-        thread_media = Media.objects.filter(thread_id = context_id)
-
-        comment_list = Comment.objects.filter(thread_id = context_id)
-
-        content_cache = []
-        content = {}
-
-        for comment in comment_list:
-
-            comment_post = comment.comment
-            id = comment.id
             account_id = thread.account_id
             account = Account.objects.get(id=account_id)
 
@@ -765,40 +951,148 @@ class CommentView(View):
 
             position = get_position.position
 
-            my_id = Account.objects.get(username = username);
-            my_id = my_id.id
+            thread_media = Media.objects.filter(thread_id = context_id)
 
-            if_favorited = CommentFavoriter.objects.filter(comment_id = id , account_id = my_id).exists()
+            comment_list = Comment.objects.filter(thread_id = context_id)
 
-            favorite_count = CommentFavoriter.objects.filter(id = id).count()
+            content_cache = []
+            content = {}
 
-            context_list = {
-                'id' : id,
-                'comment_post' : comment_post,
+            for comment in comment_list:
+
+                comment_post = comment.comment
+                id = comment.id
+                account_id = thread.account_id
+                account = Account.objects.get(id=account_id)
+
+                firstname = account.firstname
+                lastname = account.lastname
+                position_id = account.position_id
+                display_pic = account.display_pic
+
+                get_position = Position.objects.get(id = position_id)
+
+                position = get_position.position
+
+                my_id = Account.objects.get(username = username);
+                my_id = my_id.id
+
+                if_favorited = CommentFavoriter.objects.filter(comment_id = id , account_id = my_id).exists()
+
+                favorite_count = CommentFavoriter.objects.filter(id = id).count()
+
+                reply_count = Reply.objects.filter(id = id).count()
+
+                context_list = {
+                    'id' : id,
+                    'comment_post' : comment_post,
+                    'firstname' : firstname,
+                    'lastname' : lastname,
+                    'position' : position,
+                    'display_pic' : display_pic,
+                    'if_favorited' : if_favorited,
+                    'favorite_count' : favorite_count,
+                    'reply_count' : reply_count
+                }
+
+                content_cache.append(context_list)
+
+            content = {
+                'thread' : thread,
+                'date' : date,
                 'firstname' : firstname,
                 'lastname' : lastname,
                 'position' : position,
                 'display_pic' : display_pic,
-                'if_favorited' : if_favorited,
-                'favorite_count' : favorite_count
+                'thread_media': thread_media,
+                'content_cache':content_cache,
+                'is_logged_in' : is_logged_in
             }
 
-            content_cache.append(context_list)
 
-        content = {
-            'thread' : thread,
-            'date' : date,
-            'firstname' : firstname,
-            'lastname' : lastname,
-            'position' : position,
-            'display_pic' : display_pic,
-            'thread_media': thread_media,
-            'content_cache':content_cache,
-            'is_logged_in' : is_logged_in
-        }
+            return render(request, self.template_name, content)
+
+        else:
+
+            thread = Thread.objects.get(id=context_id)
+
+            thread = Thread.objects.get(id=context_id)
+            id = thread.id
+            date = thread.date
+
+            account_id = thread.account_id
+            account = Account.objects.get(id=account_id)
+
+            firstname = account.firstname
+            lastname = account.lastname
+            position_id = account.position_id
+            display_pic = account.display_pic
+
+            get_position = Position.objects.get(id = position_id)
+
+            position = get_position.position
+
+            thread_media = Media.objects.filter(thread_id = context_id)
+
+            comment_list = Comment.objects.filter(thread_id = context_id)
+
+            content_cache = []
+            content = {}
+
+            for comment in comment_list:
+
+                comment_post = comment.comment
+                id = comment.id
+                account_id = thread.account_id
+                account = Account.objects.get(id=account_id)
+
+                firstname = account.firstname
+                lastname = account.lastname
+                position_id = account.position_id
+                display_pic = account.display_pic
+
+                get_position = Position.objects.get(id = position_id)
+
+                position = get_position.position
+
+                my_id = Account.objects.get(username = username);
+                my_id = my_id.id
+
+                if_favorited = CommentFavoriter.objects.filter(comment_id = id , account_id = my_id).exists()
+
+                favorite_count = CommentFavoriter.objects.filter(id = id).count()
+
+                reply_count = Reply.objects.filter(id = id).count()
+
+                context_list = {
+                    'id' : id,
+                    'comment_post' : comment_post,
+                    'firstname' : firstname,
+                    'lastname' : lastname,
+                    'position' : position,
+                    'display_pic' : display_pic,
+                    'if_favorited' : if_favorited,
+                    'favorite_count' : favorite_count,
+                    'reply_count' : reply_count
+                }
+
+                content_cache.append(context_list)
+
+            content = {
+                'thread' : thread,
+                'date' : date,
+                'firstname' : firstname,
+                'lastname' : lastname,
+                'position' : position,
+                'display_pic' : display_pic,
+                'thread_media': thread_media,
+                'content_cache':content_cache,
+                'is_logged_in' : is_logged_in
+            }
 
 
-        return render(request, self.template_name, content)
+            return render(request, self.template_name, content)
+
 
 
 
@@ -1612,6 +1906,8 @@ class ProfileView(View):
 
             favorite_count = ThreadFavoriter.objects.filter(id = id).count()
 
+            comment_count = Comment.objects.filter(id = id).count()
+
             thread_media = Media.objects.filter(thread_id = id)[:1]
 
             context_list = {
@@ -1625,7 +1921,8 @@ class ProfileView(View):
                 'display_pic' : display_pic,
                 'thread_media' : thread_media,
                 'if_favorited' : if_favorited,
-                'favorite_count' : favorite_count
+                'favorite_count' : favorite_count,
+		'comment_count' : comment_count
             }
 
             content_cache.append(context_list)
@@ -1704,6 +2001,8 @@ class ProfileView(View):
 
                     favorite_count = ThreadFavoriter.objects.filter(id = id).count()
 
+		    comment_count = Comment.objects.filter(id = id).count()
+
                     thread_media = Media.objects.filter(thread_id = id)[:1]
 
                     context_list = {
@@ -1717,6 +2016,7 @@ class ProfileView(View):
                         'display_pic' : display_pic,
                         'if_favorited' : if_favorited,
                         'favorite_count' : favorite_count,
+			'comment_count' : comment_count,
                         'thread_media' : thread_media,
                         'err_msg' : 'Display picture must be PNG JPG OR JPEG'
                     }
@@ -1952,22 +2252,70 @@ class ForgotPasswordView(View):
 
         if form.is_valid():
 
-            username = reply = form.cleaned_data['username']
-            password = username
+	    username = request.POST['username']
+            if Account.objects.filter(username = username).exists():
 
-            send_mail(
-                'Subject here',
-                'Here is the message.',
-                'iamcoole007@gmail.com',
-                ['dretzam@gmail.com'],
-                fail_silently=False,
-            )
+               
+		reset_code = random.randint(99999,9999999)
 
-            forgot_database = ForgotPassword
-            forgot_database.username = username
-            forgot_database.reset_password = reset_password
+                clear_cache = ForgotPassword.objects.filter(username = username).delete()
+
+                new_reset = ForgotPassword()
+                new_reset.reset_password = reset_code
+                new_reset.username = username
+                new_reset.save()
+
+                message = 'Hi dear comrade!Your reset code is =' +  str(reset_code) + ' follow this link to reset password ourfederal.com/ourfederal/resetpassword'
+                email = EmailMessage('Your password reset details', message, to=[username])
+                email.send()
+
+                success_message = 'Your password reset details has been sent to your email account(username), get the email and reset password'                
+                
+
+                context = {
+                    'success_message' : success_message
+                }
+
+                return render(request , self.template_name, context)
 
 
+            else:
+
+                form=self.form_class(None)
+                error_message = ' Account with that username does not exist'
+
+                context = {
+                    'form' : form,
+                    'error_message' : error_message
+                }
+
+                return render(request , self.template_name, context)
+
+
+
+        else :
+
+            form=self.form_class(None)
+            error_message = ' Sorry something unexpected happened, pls try again'
+
+            context = {
+                'form' : form,
+                'error_message' : error_message
+            }
+
+            return render(request , self.template_name, context)
+
+
+
+
+
+
+class ResetPasswordView(View):
+
+    form_class = ResetPasswordTemplate
+    template_name = 'federal/reset_password.html'
+
+    def get(self,request):
 
         form=self.form_class(None)
 
@@ -1976,6 +2324,195 @@ class ForgotPasswordView(View):
         }
 
         return render(request , self.template_name, context)
+
+    def post(self,request):
+
+        form=self.form_class(request.POST)
+
+        if form.is_valid():
+
+            username = form.cleaned_data['username']
+            reset_code = form.cleaned_data['reset_password']
+            new_password = request.POST['new_password']
+            confirm_password = request.POST['confirm_password']
+
+            if Account.objects.filter(username = username).exists() :
+
+
+                if new_password == confirm_password :
+
+                    try :
+
+                        pass_reset = ForgotPassword.objects.get(username = username)
+			
+
+                        if int(pass_reset.reset_password) == int(reset_code) :
+
+                            acc = Account.objects.get(username = username)
+
+                            acc.password = make_password(new_password)
+                            acc.save()
+
+                            forgot_database = ForgotPassword.objects.get(username = username)
+                            forgot_database.delete()
+
+
+                            success_message = 'Hi comrade, your new password has been set succesfully, continue to login'
+
+                            context = {
+                                'success_message' : success_message
+                            }
+
+                            return render(request , self.template_name, context)
+
+                        else :
+
+                            form=self.form_class(None)
+                            error_message = ' Invalid reset code '
+
+                            context = {
+                                'form' : form,
+                                'error_message' : error_message
+                            }
+
+                            return render(request , self.template_name, context)
+
+                    except :
+
+                        form=self.form_class(None)
+                        error_message = ' Sorry your username is invalid, request for password reset '
+
+                        context = {
+                            'form' : form,
+                            'error_message' : error_message
+                        }
+
+                        return render(request , self.template_name, context)
+
+
+
+
+
+                else :
+
+                    form=self.form_class(None)
+                    error_message = ' Passwords did not match '
+
+                    context = {
+                        'form' : form,
+                        'error_message' : error_message
+                    }
+
+                    return render(request , self.template_name, context)
+
+            else :
+
+                form=self.form_class(None)
+                error_message = ' Account for that username does not exist '
+
+                context = {
+                    'form' : form,
+                    'error_message' : error_message
+                }
+
+                return render(request , self.template_name, context)
+
+
+
+class EditProfileView(View):
+
+    form_class = EditProfileTemplate
+    template_name = 'federal/edit_profile.html'
+
+    def get(self,request):
+
+        form=self.form_class(None)
+
+        context = {
+            'form' : form
+        }
+
+        return render(request , self.template_name, context)
+
+    def post(self,request):
+
+        if request.session.has_key('username'):
+            username = request.session['username']
+
+        form=self.form_class(request.POST)
+
+        if form.is_valid():
+
+            old_password = request.POST['password']
+            new_password = request.POST['new_password']
+            confirm_password = request.POST['confirm_password']
+
+            acc = Account.objects.get(username = username)
+
+            if new_password == confirm_password :
+
+                if check_password(old_password , acc.password) :
+
+                    acc.password = new_password
+                    acc.save()
+
+                    success_message = 'Your new password has been updated'
+
+                    context = {
+                        'success_message' : success_message
+                    }
+
+                    return render(request , self.template_name, context)
+
+                else :
+
+                    form=self.form_class(None)
+                    error_message = ' Old password Incorrect, pls try again'
+
+                    context = {
+                        'form' : form,
+                        'error_message' : error_message
+                    }
+
+                    return render(request , self.template_name, context)
+
+            else :
+
+                form=self.form_class(None)
+                error_message = ' Passwords do not match, pls try again'
+
+                context = {
+                    'form' : form,
+                    'error_message' : error_message
+                }
+
+                return render(request , self.template_name, context)
+
+        else :
+
+            form=self.form_class(None)
+            error_message = ' Oops something wrong happened, pls try again'
+
+            context = {
+                'form' : form,
+                'error_message' : error_message
+            }
+
+            return render(request , self.template_name, context)
+
+
+
+
+
+def all_json_models(request, state):
+
+    current_state = State.objects.get(id=state)
+    models = Lga.objects.filter(state=current_state)
+    json_models = serializers.serialize("json", models)
+    return HttpResponse(json_models)
+
+
+
 
 
 def logout(request):

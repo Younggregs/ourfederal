@@ -5,8 +5,8 @@ from django import forms
 
 class Signin(forms.ModelForm):
 
-    username = forms.EmailField()
-    password = forms.CharField(max_length = 50)
+    username = forms.EmailField( widget=forms.TextInput(attrs={'placeholder': 'Email e.g you@gmail.com'}) )
+    password = forms.CharField(max_length = 50,widget=forms.PasswordInput)
 
     class Meta:
         model = User
@@ -16,9 +16,9 @@ class Signup(forms.ModelForm):
 
     firstname = forms.CharField(max_length = 30)
     lastname = forms.CharField(max_length = 30)
-    username = forms.EmailField()
-    password = forms.CharField(max_length = 50)
-
+    username = forms.EmailField( widget=forms.TextInput(attrs={'placeholder': 'Email e.g you@gmail.com'}) )
+    password = forms.CharField(max_length = 50,widget=forms.PasswordInput)
+   
     class Meta:
         model = User
         fields = ['firstname','lastname','username','password']
@@ -26,7 +26,7 @@ class Signup(forms.ModelForm):
 
 class CommentTemplate(forms.ModelForm):
 
-    comment = forms.CharField()
+    comment = forms.CharField( widget=forms.TextInput(attrs={'placeholder': 'post comment here'}) )
 
     class Meta:
         model = User
@@ -35,7 +35,7 @@ class CommentTemplate(forms.ModelForm):
 
 class ReplyTemplate(forms.ModelForm):
 
-    reply = forms.CharField()
+    reply = forms.CharField( widget=forms.TextInput(attrs={'placeholder': 'post reply here'}) )
 
     class Meta:
         model = User
@@ -50,7 +50,7 @@ class ThreadTemplate(forms.ModelForm):
     )
 
     media = forms.FileField(widget=forms.ClearableFileInput(attrs={'multiple': True,
-                                                                    'required': False}))
+                                                                    'required': False}),required=False)
 
     def __init__(self, *args, **kwargs):
         super(ThreadTemplate, self).__init__(*args, **kwargs)
@@ -93,3 +93,23 @@ class ForgotPasswordTemplate(forms.ModelForm):
     class Meta:
         model = ForgotPassword
         fields = ['username']
+
+class ResetPasswordTemplate(forms.ModelForm):
+
+    username = forms.EmailField( widget=forms.TextInput(attrs={'placeholder': 'Email e.g you@gmail.com'}) )
+    reset_password = forms.IntegerField()
+
+    class Meta:
+        model = User
+        fields = ['username','reset_password']
+
+
+
+class EditProfileTemplate(forms.ModelForm):
+
+    password = forms.CharField(max_length = 50,widget=forms.PasswordInput)
+
+    class Meta:
+        model = User
+        fields = ['password']
+

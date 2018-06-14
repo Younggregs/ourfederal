@@ -2,10 +2,11 @@ from django.conf.urls import url, include
 from django.contrib import admin
 from django.conf import settings
 from django.conf.urls.static import static
-from rest_framework.urlpatterns import format_suffix_patterns
+
 
 urlpatterns = [
-    url(r'^thefederal/', include('federal.urls')),
+    url(r'^ourfederal/', include('federal.urls')),
+    url(r'^', include('federal.urls')),
     url(r'^admin/', admin.site.urls),
 
 ]

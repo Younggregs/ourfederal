@@ -1,4 +1,4 @@
-{% if is_logged_in %}
+
 {% extends 'federal/base.html'  %}
 
 {% block javascript %}
@@ -9,7 +9,7 @@
       var reply_id = $this.data('id');
 
       $.ajax({
-        url: '/thefederal/ajax/r_unfavorited/',
+        url: '/ourfederal/ajax/r_unfavorited/',
         data: {
           'reply_id': reply_id
         },
@@ -44,7 +44,7 @@
 
 
       $.ajax({
-        url: '/thefederal/ajax/r_favorited/',
+        url: '/ourfederal/ajax/r_favorited/',
         data: {
           'reply_id': reply_id
         },
@@ -78,7 +78,7 @@
 <div class="container">
   <div class="row">
     <div class="col-lg-6 col-lg-offset-3 col-md-6 col-md-offset-3 col-sm-12 col-xs-12">
-<p style="text-align:center;font-size:1.3em">Democracy</p>
+<p style="text-align:center;font-size:1.5em;color:white;">Democracy</p>
 
 <div class="panel panel-default">
     <div class="panel-body">
@@ -140,6 +140,3 @@
 {% endif %}
 
 {% endblock %}
-{% else %}
-<p style="color:red;font-size:1.5em;">You must login to access this page</p>
-{% endif %}

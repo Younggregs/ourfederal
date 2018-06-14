@@ -23,16 +23,16 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'f-o#7vspd#@po!e*q==-m#md&o=r_bt9b5v$q-*5@7+59a^=q1'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost','ourfederal.com','192.64.116.24','127.0.0.1']
 
 
 # Application definition
 
 INSTALLED_APPS = [
     'federal.apps.FederalConfig',
-    'rest_framework',
+    'django_social_share',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -80,11 +80,25 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'federal_db',
         'USER': 'root',
-        'PASSWORD': '',
-        'HOST':'127.0.0.1',
-        'PORT':'3306',
+        'PASSWORD': 'Greggy@97',
+        'HOST':'',
+        'PORT':'',
     }
 }
+
+
+
+
+PASSWORD_HASHERS = (
+    'django.contrib.auth.hashers.CryptPasswordHasher',
+    'django.contrib.auth.hashers.PBKDF2PasswordHasher',
+    'django.contrib.auth.hashers.PBKDF2SHA1PasswordHasher',
+    'django.contrib.auth.hashers.BCryptSHA256PasswordHasher',
+    'django.contrib.auth.hashers.BCryptPasswordHasher',
+    'django.contrib.auth.hashers.SHA1PasswordHasher',
+    'django.contrib.auth.hashers.MD5PasswordHasher',
+)
+
 
 
 # Password validation
@@ -117,13 +131,25 @@ USE_I18N = True
 
 USE_L10N = True
 
-USE_TZ = True
+USE_TZ = False
 
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
-STATIC_URL = '/static/'
+STATIC_ROOT = '/var/www/html/static/'
+STATIC_URL = 'http://ourfederal.com/static/'
 
-MEDIA_ROOT = os.path.join(BASE_DIR ,'media')
-MEDIA_URL = '/media/'
+MEDIA_ROOT = '/var/www/html/media/'
+MEDIA_URL = 'http://ourfederal.com/media/'
+
+
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'ourfederal@gmail.com'
+DEFAULT_FROM_EMAIL = 'Team Our Federal  <noreply@host.com>'
+EMAIL_HOST_PASSWORD = 'Greggy@97'
+EMAIL_PORT = 587
+
